@@ -191,7 +191,7 @@ export function Hero() {
                 cursor: 'pointer',
               }}
             >
-              <MessageCircle size={16} aria-hidden="true" /> Soy técnico
+              <MessageCircle size={16} aria-hidden="true" /> Soy aliado
             </motion.button>
           </motion.div>
 

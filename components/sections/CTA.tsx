@@ -122,7 +122,7 @@ export function CTA() {
               transition: 'all 0.2s',
             }}
           >
-            <MessageCircle size={18} aria-hidden="true" /> Soy técnico
+            <MessageCircle size={18} aria-hidden="true" /> Soy aliado
           </motion.button>
         </div>
 
