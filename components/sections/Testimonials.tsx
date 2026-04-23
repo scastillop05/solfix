@@ -50,7 +50,7 @@ export function Testimonials() {
               letterSpacing: '-0.02em',
             }}
           >
-            Caleños que confían<br />
+            Clientes que confían<br />
             <span style={{ color: 'rgba(255,255,255,0.2)' }}>en SOLFIX.</span>
           </h2>
         </motion.div>
@@ -138,7 +138,7 @@ export function Testimonials() {
                 <div>
                   <p style={{ color: 'white', fontFamily: FONT_HEADING, fontWeight: 600, fontSize: 13 }}>{t.name}</p>
                   <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: FONT_BODY, marginTop: 2 }}>
-                    {t.barrio}
+                    {t.barrio} · {t.service}
                   </p>
                 </div>
               </div>

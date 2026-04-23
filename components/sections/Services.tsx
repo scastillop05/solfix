@@ -153,6 +153,23 @@ export function Services() {
             </motion.div>
           ))}
         </div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          style={{
+            color: 'rgba(255,255,255,0.2)',
+            fontFamily: FONT_BODY,
+            fontSize: 12,
+            textAlign: 'center',
+            marginTop: 32,
+            letterSpacing: '0.03em',
+          }}
+        >
+          Precios orientativos · El técnico confirma el valor exacto antes de iniciar · Sin costo de visita · Pagas solo si quedas satisfecho
+        </motion.p>
       </div>
     </section>
   );

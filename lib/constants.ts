@@ -39,20 +39,23 @@ export const TESTIMONIALS: TestimonialItem[] = [
   {
     name: 'Andrea Mosquera',
     barrio: 'El Poblado',
+    service: 'Plomería',
     stars: 5,
-    text: 'Se me dañó la llave del agua a las 9pm. En 25 minutos tenía un plomero en casa. Increíble servicio.',
+    text: 'Se me dañó la llave del lavamanos un domingo a las 9pm y había agua por todo el baño. Me contactaron en menos de 20 minutos, el plomero llegó en 1 hora y cobró $55.000. Exactamente lo que me dijeron, sin sorpresas.',
   },
   {
     name: 'Julián Restrepo',
     barrio: 'Ciudad Jardín',
+    service: 'Electricidad',
     stars: 5,
-    text: 'Finalmente una plataforma donde los técnicos son de verdad confiables. Los he usado 3 veces y siempre perfecto.',
+    text: 'Cortocircuito un sábado, sin luz en media casa. Pensé que me quedaría así todo el fin de semana. El electricista llegó ese mismo día, identificó el problema en 30 minutos y pagué $90.000. Vale cada peso.',
   },
   {
     name: 'Marcela Ortiz',
-    barrio: 'Chipichape',
+    barrio: 'Laureles',
+    service: 'Cerrajería',
     stars: 5,
-    text: 'El precio fue exactamente el que me dijeron. Sin sorpresas ni cobros extra. Así se trabaja con profesionalismo.',
+    text: 'Me quedé por fuera del apartamento a las 11pm. En 35 minutos llegó el cerrajero, abrió la puerta sin dañar la cerradura y cobró $45.000. No podía creer lo rápido. Lo he recomendado a tres vecinos.',
   },
 ];
 

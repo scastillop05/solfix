@@ -20,6 +20,7 @@ export interface StatItem {
 export interface TestimonialItem {
   name: string;
   barrio: string;
+  service: string;
   stars: number;
   text: string;
 }
