@@ -1,5 +1,16 @@
 import { Resend } from 'resend';
 
+async function appendToSheet(payload: Record<string, string>): Promise<void> {
+  const url = process.env.SHEETS_WEBHOOK_URL;
+  if (!url) return;
+
+  await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+}
+
 async function sendTelegram(text: string): Promise<void> {
   const token  = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -55,6 +66,15 @@ export async function notifyServiceRequest(data: {
   await Promise.allSettled([
     sendTelegram(telegram),
     sendEmail(`[SOLFIX] Nueva solicitud — ${data.service}`, emailHtml),
+    appendToSheet({
+      type:        'solicitud',
+      service:     data.service,
+      name:        data.name,
+      phone:       data.phone,
+      barrio:      data.barrio,
+      description: data.description,
+      urgency:     data.urgency,
+    }),
   ]);
 }
 
@@ -116,8 +136,30 @@ export async function notifyTechRegistration(data: {
     ? `[SOLFIX] Nueva empresa aliada — ${data.companyName}`
     : `[SOLFIX] Nuevo técnico — ${data.name} (${data.specialty})`;
 
+  const sheetPayload: Record<string, string> = isEmpresa
+    ? {
+        type:        'aliado',
+        aliadoType:  'empresa',
+        companyName: data.companyName ?? '',
+        nit:         data.nit ?? '',
+        phone:       data.phone,
+        name:        data.name ?? '',
+        services:    data.services ?? '',
+        coverage:    data.coverage ?? '',
+      }
+    : {
+        type:       'aliado',
+        aliadoType: 'independiente',
+        name:       data.name ?? '',
+        phone:      data.phone,
+        specialty:  data.specialty ?? '',
+        barrio:     data.barrio ?? '',
+        experience: data.experience ?? '',
+      };
+
   await Promise.allSettled([
     sendTelegram(telegram),
     sendEmail(subject, emailHtml),
+    appendToSheet(sheetPayload),
   ]);
 }
