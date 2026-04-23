@@ -65,13 +65,13 @@ export function TechModal({ onClose }: TechModalProps) {
     if (Object.keys(e).length > 0) return;
 
     const msg =
-      `👷 *Quiero unirme a SOLFIX como técnico*\n\n` +
+      `[TECNICO] *Quiero unirme a SOLFIX como técnico*\n\n` +
       `*Nombre:* ${form.name}\n` +
       `*Teléfono:* ${form.phone}\n` +
       `*Especialidad:* ${form.specialty}\n` +
       `*Zona:* ${form.barrio}\n` +
       `*Experiencia:* ${form.experience || 'No especificada'}\n\n` +
-      `_Solicitud desde solfix.co_`;
+      `_Solicitud desde ${process.env.NEXT_PUBLIC_SITE_URL ?? 'solfix.lat'}_`;
 
     setSent(true);
     fetch('/api/tech', {

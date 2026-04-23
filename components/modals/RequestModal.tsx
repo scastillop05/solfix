@@ -93,14 +93,14 @@ export function RequestModal({ onClose }: RequestModalProps) {
       setStep(2);
     } else if (step === 2 && validateStep2()) {
       const msg =
-        `🔧 *Nueva solicitud SOLFIX*\n\n` +
+        `[SOLICITUD] *Nueva solicitud SOLFIX*\n\n` +
         `*Servicio:* ${form.service}\n` +
         `*Nombre:* ${form.name}\n` +
         `*Teléfono:* ${form.phone}\n` +
         `*Barrio:* ${form.barrio}\n` +
         `*Descripción:* ${form.description}\n` +
-        `*Urgencia:* ${form.urgency === 'urgente' ? '🔴 URGENTE' : '🟡 Normal'}\n\n` +
-        `_Solicitud enviada desde solfix.co_`;
+        `*Urgencia:* ${form.urgency === 'urgente' ? 'URGENTE' : 'Normal'}\n\n` +
+        `_Solicitud desde ${process.env.NEXT_PUBLIC_SITE_URL ?? 'solfix.lat'}_`;
 
       setStep(3);
       fetch('/api/contact', {
