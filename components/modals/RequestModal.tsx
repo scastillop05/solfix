@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { track } from '@vercel/analytics';
 import {
   X, CheckCircle, ArrowRight, MessageCircle, AlertCircle,
 } from 'lucide-react';
@@ -89,6 +90,7 @@ export function RequestModal({ onClose }: RequestModalProps) {
 
   const handleNext = () => {
     if (step === 1 && validateStep1()) {
+      track('request_service_selected', { service: form.service });
       setStep(2);
     } else if (step === 2 && validateStep2()) {
       const msg =
@@ -101,6 +103,7 @@ export function RequestModal({ onClose }: RequestModalProps) {
         `*Urgencia:* ${form.urgency === 'urgente' ? 'URGENTE' : 'Normal'}\n\n` +
         `_Solicitud desde ${process.env.NEXT_PUBLIC_SITE_URL ?? 'solfix.lat'}_`;
 
+      track('request_submitted', { service: form.service, urgency: form.urgency });
       setStep(3);
       fetch('/api/contact', {
         method:  'POST',
