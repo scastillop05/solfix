@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  X, CheckCircle, ArrowRight, MessageCircle,
-  AlertCircle, Loader2,
+  X, CheckCircle, ArrowRight, MessageCircle, AlertCircle,
 } from 'lucide-react';
 import { buildWhatsAppURL } from '@/lib/utils';
 import { SERVICE_OPTIONS } from '@/lib/constants';
@@ -20,7 +19,7 @@ const INITIAL_FORM: RequestFormData = {
   service: '',
   name: '',
   phone: '',
-  barrio: '',
+  address: '',
   description: '',
   urgency: 'normal',
 };
@@ -82,7 +81,7 @@ export function RequestModal({ onClose }: RequestModalProps) {
     const e: Partial<RequestFormData> = {};
     if (!form.name.trim())        e.name        = 'Ingresa tu nombre';
     if (!form.phone.trim() || form.phone.length < 7) e.phone = 'Ingresa un número válido';
-    if (!form.barrio.trim())      e.barrio      = 'Ingresa tu barrio';
+    if (!form.address.trim())     e.address     = 'Ingresa la dirección';
     if (!form.description.trim()) e.description = 'Describe brevemente el problema';
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -97,7 +96,7 @@ export function RequestModal({ onClose }: RequestModalProps) {
         `*Servicio:* ${form.service}\n` +
         `*Nombre:* ${form.name}\n` +
         `*Teléfono:* ${form.phone}\n` +
-        `*Barrio:* ${form.barrio}\n` +
+        `*Dirección:* ${form.address}\n` +
         `*Descripción:* ${form.description}\n` +
         `*Urgencia:* ${form.urgency === 'urgente' ? 'URGENTE' : 'Normal'}\n\n` +
         `_Solicitud desde ${process.env.NEXT_PUBLIC_SITE_URL ?? 'solfix.lat'}_`;
@@ -120,6 +119,12 @@ export function RequestModal({ onClose }: RequestModalProps) {
       document.body.style.overflow = '';
     };
   }, []);
+
+  useEffect(() => {
+    if (step !== 3) return;
+    const timer = setTimeout(onClose, 5000);
+    return () => clearTimeout(timer);
+  }, [step, onClose]);
 
   return (
     <motion.div
@@ -378,19 +383,19 @@ export function RequestModal({ onClose }: RequestModalProps) {
                 </div>
 
                 <div>
-                  <label htmlFor="req-barrio" style={labelStyle}>Barrio o zona</label>
+                  <label htmlFor="req-address" style={labelStyle}>Dirección</label>
                   <input
-                    id="req-barrio"
-                    value={form.barrio}
-                    onChange={(e) => setField('barrio', e.target.value)}
-                    placeholder="Ej: El Poblado, Laureles, Centro..."
-                    style={inputStyle(errors.barrio)}
-                    aria-invalid={!!errors.barrio}
-                    aria-describedby={errors.barrio ? 'req-barrio-err' : undefined}
+                    id="req-address"
+                    value={form.address}
+                    onChange={(e) => setField('address', e.target.value)}
+                    placeholder="Ej: Cra 43 #12-50, Apto 201, El Poblado"
+                    style={inputStyle(errors.address)}
+                    aria-invalid={!!errors.address}
+                    aria-describedby={errors.address ? 'req-address-err' : undefined}
                   />
-                  {errors.barrio && (
-                    <p id="req-barrio-err" style={errStyle} role="alert">
-                      <AlertCircle size={11} aria-hidden="true" /> {errors.barrio}
+                  {errors.address && (
+                    <p id="req-address-err" style={errStyle} role="alert">
+                      <AlertCircle size={11} aria-hidden="true" /> {errors.address}
                     </p>
                   )}
                 </div>
@@ -456,20 +461,27 @@ export function RequestModal({ onClose }: RequestModalProps) {
                 ¡Solicitud enviada!
               </h2>
               <p style={{ color: 'rgba(255,255,255,0.5)', fontFamily: FONT_BODY, fontSize: 15, lineHeight: 1.6, marginBottom: 8 }}>
-                Te estamos redirigiendo a WhatsApp para confirmar tu solicitud.
+                WhatsApp se abrió para confirmar tu solicitud.
               </p>
-              <p style={{ color: 'rgba(255,255,255,0.3)', fontFamily: FONT_BODY, fontSize: 13 }}>
+              <p style={{ color: 'rgba(255,255,255,0.3)', fontFamily: FONT_BODY, fontSize: 13, marginBottom: 24 }}>
                 Un técnico te contactará en los próximos{' '}
                 <strong style={{ color: '#F55A14' }}>18 minutos</strong>.
               </p>
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                style={{ display: 'inline-block', marginTop: 24 }}
-                aria-hidden="true"
+              <button
+                onClick={onClose}
+                style={{
+                  background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  color: 'rgba(255,255,255,0.5)',
+                  fontFamily: FONT_BODY,
+                  fontSize: 13,
+                  padding: '10px 24px',
+                  borderRadius: 10,
+                  cursor: 'pointer',
+                }}
               >
-                <Loader2 size={24} color="rgba(255,255,255,0.2)" />
-              </motion.div>
+                Cerrar
+              </button>
             </motion.div>
           )}
         </AnimatePresence>

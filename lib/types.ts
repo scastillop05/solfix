@@ -47,7 +47,7 @@ export interface RequestFormData {
   service: string;
   name: string;
   phone: string;
-  barrio: string;
+  address: string;
   description: string;
   urgency: 'normal' | 'urgente';
 }
@@ -74,7 +74,7 @@ export interface ContactPayload {
   service: string;
   name: string;
   phone: string;
-  barrio: string;
+  address: string;
   description: string;
   urgency: 'normal' | 'urgente';
 }

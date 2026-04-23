@@ -37,7 +37,7 @@ export async function notifyServiceRequest(data: {
   service: string;
   name: string;
   phone: string;
-  barrio: string;
+  address: string;
   description: string;
   urgency: 'normal' | 'urgente';
 }): Promise<void> {
@@ -48,7 +48,7 @@ export async function notifyServiceRequest(data: {
     `*Servicio:* ${data.service}\n` +
     `*Nombre:* ${data.name}\n` +
     `*Teléfono:* ${data.phone}\n` +
-    `*Barrio:* ${data.barrio}\n` +
+    `*Dirección:* ${data.address}\n` +
     `*Descripción:* ${data.description}\n` +
     `*Urgencia:* ${urgencyLabel}`;
 
@@ -58,7 +58,7 @@ export async function notifyServiceRequest(data: {
     `<tr><td style="padding:8px;font-weight:bold">Servicio</td><td style="padding:8px">${data.service}</td></tr>` +
     `<tr style="background:#f5f5f5"><td style="padding:8px;font-weight:bold">Nombre</td><td style="padding:8px">${data.name}</td></tr>` +
     `<tr><td style="padding:8px;font-weight:bold">Teléfono</td><td style="padding:8px">${data.phone}</td></tr>` +
-    `<tr style="background:#f5f5f5"><td style="padding:8px;font-weight:bold">Barrio</td><td style="padding:8px">${data.barrio}</td></tr>` +
+    `<tr style="background:#f5f5f5"><td style="padding:8px;font-weight:bold">Dirección</td><td style="padding:8px">${data.address}</td></tr>` +
     `<tr><td style="padding:8px;font-weight:bold">Descripción</td><td style="padding:8px">${data.description}</td></tr>` +
     `<tr style="background:#f5f5f5"><td style="padding:8px;font-weight:bold">Urgencia</td><td style="padding:8px">${urgencyLabel}</td></tr>` +
     `</table>`;
@@ -71,7 +71,7 @@ export async function notifyServiceRequest(data: {
       service:     data.service,
       name:        data.name,
       phone:       data.phone,
-      barrio:      data.barrio,
+      address:     data.address,
       description: data.description,
       urgency:     data.urgency,
     }),

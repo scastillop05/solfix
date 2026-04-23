@@ -39,7 +39,7 @@ function validatePayload(body: unknown): body is ContactPayload {
     typeof b.service     === 'string' && b.service.trim().length > 0 &&
     typeof b.name        === 'string' && b.name.trim().length >= 2 &&
     typeof b.phone       === 'string' && b.phone.replace(/\D/g, '').length >= 7 &&
-    typeof b.barrio      === 'string' && b.barrio.trim().length > 0 &&
+    typeof b.address     === 'string' && b.address.trim().length > 0 &&
     typeof b.description === 'string' && b.description.trim().length > 0 &&
     (b.urgency === 'normal' || b.urgency === 'urgente')
   );
