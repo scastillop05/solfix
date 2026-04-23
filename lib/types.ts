@@ -18,11 +18,14 @@ export interface StatItem {
 }
 
 export interface TestimonialItem {
-  name: string;
-  barrio: string;
+  icon: LucideIcon;
   service: string;
-  stars: number;
-  text: string;
+  city: string;
+  headline: string;
+  detail: string;
+  responseTime: string;
+  resolvedIn: string;
+  price: string;
 }
 
 export interface HowItWorksStep {

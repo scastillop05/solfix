@@ -1,6 +1,6 @@
 import {
   Zap, Wrench, Lock, Paintbrush, Wind, Hammer,
-  Users, Clock, Star, TrendingUp,
+  Clock, Star,
   MessageCircle, MapPin, CheckCircle,
 } from 'lucide-react';
 import type { ServiceOption, StatItem, TestimonialItem, HowItWorksStep, FooterColumn, EarningsDay } from './types';
@@ -29,33 +29,42 @@ export const SERVICES_DATA: ServiceOption[] = [
 ];
 
 export const STATS: StatItem[] = [
-  { icon: Users,      value: 200,  suffix: '+',    prefix: '',  label: 'Técnicos activos' },
-  { icon: Clock,      value: 30,   suffix: ' min', prefix: '<', label: 'Primera respuesta' },
-  { icon: Star,       value: 98,   suffix: '%',    prefix: '',  label: 'Clientes satisfechos' },
-  { icon: TrendingUp, value: 5000, suffix: '+',    prefix: '',  label: 'Servicios completados' },
+  { icon: Clock,        value: 30,  suffix: ' min', prefix: '<', label: 'Primera respuesta' },
+  { icon: Zap,          value: 24,  suffix: '/7',   prefix: '',  label: 'Disponible siempre' },
+  { icon: CheckCircle,  value: 0,   suffix: '',     prefix: '$', label: 'Costo de visita' },
+  { icon: Star,         value: 100, suffix: '%',    prefix: '',  label: 'Garantía de satisfacción' },
 ];
 
 export const TESTIMONIALS: TestimonialItem[] = [
   {
-    name: 'Andrea Mosquera',
-    barrio: 'El Poblado',
+    icon: Wrench,
     service: 'Plomería',
-    stars: 5,
-    text: 'Se me dañó la llave del lavamanos un domingo a las 9pm y había agua por todo el baño. Me contactaron en menos de 20 minutos, el plomero llegó en 1 hora y cobró $55.000. Exactamente lo que me dijeron, sin sorpresas.',
+    city: 'Medellín',
+    headline: 'Fuga de agua un domingo a las 9pm',
+    detail: 'Agua por todo el baño, sin saber a quién llamar un fin de semana. Plomero llegó en 1 hora, cobró exactamente lo acordado, sin sorpresas.',
+    responseTime: '< 20 min',
+    resolvedIn: '1 hora',
+    price: '$55.000',
   },
   {
-    name: 'Julián Restrepo',
-    barrio: 'Ciudad Jardín',
+    icon: Zap,
     service: 'Electricidad',
-    stars: 5,
-    text: 'Cortocircuito un sábado, sin luz en media casa. Pensé que me quedaría así todo el fin de semana. El electricista llegó ese mismo día, identificó el problema en 30 minutos y pagué $90.000. Vale cada peso.',
+    city: 'Bogotá',
+    headline: 'Cortocircuito un sábado sin luz en media casa',
+    detail: 'Parecía imposible conseguir ayuda un fin de semana. El electricista llegó ese mismo día e identificó el problema en 30 minutos.',
+    responseTime: '< 30 min',
+    resolvedIn: '2 horas',
+    price: '$90.000',
   },
   {
-    name: 'Marcela Ortiz',
-    barrio: 'Laureles',
+    icon: Lock,
     service: 'Cerrajería',
-    stars: 5,
-    text: 'Me quedé por fuera del apartamento a las 11pm. En 35 minutos llegó el cerrajero, abrió la puerta sin dañar la cerradura y cobró $45.000. No podía creer lo rápido. Lo he recomendado a tres vecinos.',
+    city: 'Cali',
+    headline: 'Puerta trancada a las 11pm',
+    detail: 'El cerrajero llegó en 35 minutos, abrió sin dañar la cerradura y cobró exactamente lo que dijo desde el principio.',
+    responseTime: '35 min',
+    resolvedIn: '35 min',
+    price: '$45.000',
   },
 ];
 

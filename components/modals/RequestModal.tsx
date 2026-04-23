@@ -101,7 +101,7 @@ export function RequestModal({ onClose }: RequestModalProps) {
         `*Dirección:* ${form.address}\n` +
         `*Descripción:* ${form.description}\n` +
         `*Urgencia:* ${form.urgency === 'urgente' ? 'URGENTE' : 'Normal'}\n\n` +
-        `_Solicitud desde ${process.env.NEXT_PUBLIC_SITE_URL ?? 'solfix.lat'}_`;
+        `_Solicitud desde ${process.env.NEXT_PUBLIC_SITE_URL ?? 'solfix.co'}_`;
 
       gtagEvent('request_submitted', { service: form.service, urgency: form.urgency });
       setStep(3);

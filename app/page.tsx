@@ -1,5 +1,6 @@
 import { ModalProvider } from '@/components/providers/ModalProvider';
 import { Cursor } from '@/components/ui/Cursor';
+import { WhatsFloatBtn } from '@/components/ui/WhatsFloatBtn';
 import { Navbar } from '@/components/sections/Navbar';
 import { Hero } from '@/components/sections/Hero';
 import { StatsBar } from '@/components/sections/StatsBar';
@@ -15,6 +16,7 @@ export default function Page() {
   return (
     <>
       <Cursor />
+      <WhatsFloatBtn />
       <ModalProvider>
         <Navbar />
         <main>
