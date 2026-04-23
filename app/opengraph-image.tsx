@@ -104,7 +104,7 @@ export default async function Image() {
             }}
           >
             <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#F55A14', display: 'flex' }} />
-            <span style={{ color: 'white', fontSize: 20, fontWeight: 600 }}>Respuesta en ~18 min</span>
+            <span style={{ color: 'white', fontSize: 20, fontWeight: 600 }}>Servicio el mismo día</span>
           </div>
           <div
             style={{

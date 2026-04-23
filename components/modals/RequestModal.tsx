@@ -467,8 +467,8 @@ export function RequestModal({ onClose }: RequestModalProps) {
                 WhatsApp se abrió para confirmar tu solicitud.
               </p>
               <p style={{ color: 'rgba(255,255,255,0.3)', fontFamily: FONT_BODY, fontSize: 13, marginBottom: 24 }}>
-                Un técnico te contactará en los próximos{' '}
-                <strong style={{ color: '#F55A14' }}>18 minutos</strong>.
+                Te contactaremos en{' '}
+                <strong style={{ color: '#F55A14' }}>menos de 30 minutos</strong> para coordinar tu servicio.
               </p>
               <button
                 onClick={onClose}

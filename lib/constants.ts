@@ -30,7 +30,7 @@ export const SERVICES_DATA: ServiceOption[] = [
 
 export const STATS: StatItem[] = [
   { icon: Users,      value: 200,  suffix: '+',    prefix: '',  label: 'Técnicos activos' },
-  { icon: Clock,      value: 18,   suffix: ' min', prefix: '~', label: 'Tiempo de respuesta' },
+  { icon: Clock,      value: 30,   suffix: ' min', prefix: '<', label: 'Primera respuesta' },
   { icon: Star,       value: 98,   suffix: '%',    prefix: '',  label: 'Clientes satisfechos' },
   { icon: TrendingUp, value: 5000, suffix: '+',    prefix: '',  label: 'Servicios completados' },
 ];

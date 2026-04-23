@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: '%s | SOLFIX',
   },
   description:
-    'Plomeros, electricistas, cerrajeros y más — verificados, calificados y a un clic de distancia. Respuesta en ~18 minutos.',
+    'Plomeros, electricistas, cerrajeros y más — verificados, calificados y a un clic de distancia. Servicio el mismo día.',
   keywords: [
     'técnico a domicilio',
     'electricista a domicilio',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'SOLFIX — Tu técnico de confianza',
-    description: 'Plomeros, electricistas, cerrajeros y más. Respuesta en ~18 min.',
+    description: 'Plomeros, electricistas, cerrajeros y más. Servicio el mismo día.',
   },
   alternates: {
     canonical: siteUrl,

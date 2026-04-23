@@ -389,8 +389,8 @@ export function Hero() {
                 <Clock size={16} color="#1462F5" />
               </div>
               <div>
-                <p style={{ color: '#08122E', fontFamily: FONT_HEADING, fontWeight: 800, fontSize: 16, lineHeight: 1 }}>18 min</p>
-                <p style={{ color: '#8B96B8', fontFamily: FONT_BODY, fontSize: 10, marginTop: 2 }}>Tiempo promedio</p>
+                <p style={{ color: '#08122E', fontFamily: FONT_HEADING, fontWeight: 800, fontSize: 16, lineHeight: 1 }}>Hoy mismo</p>
+                <p style={{ color: '#8B96B8', fontFamily: FONT_BODY, fontSize: 10, marginTop: 2 }}>Servicio el mismo día</p>
               </div>
             </div>
           </motion.div>
