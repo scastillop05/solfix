@@ -396,16 +396,26 @@ export function RequestModal({ onClose }: RequestModalProps) {
                 </div>
 
                 <div>
-                  <label htmlFor="req-desc" style={labelStyle}>Describe el problema</label>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                    <label htmlFor="req-desc" style={{ ...labelStyle, marginBottom: 0 }}>Describe el problema</label>
+                    <span style={{
+                      fontSize: 11,
+                      fontFamily: FONT_BODY,
+                      color: form.description.length > 270 ? '#F55A14' : 'rgba(255,255,255,0.25)',
+                    }}>
+                      {form.description.length} / 300
+                    </span>
+                  </div>
                   <textarea
                     id="req-desc"
                     value={form.description}
-                    onChange={(e) => setField('description', e.target.value)}
+                    onChange={(e) => setField('description', e.target.value.slice(0, 300))}
                     placeholder="Ej: Se dañó la llave del lavamanos, hay fuga de agua..."
                     rows={3}
                     style={{ ...inputStyle(errors.description), resize: 'none' }}
                     aria-invalid={!!errors.description}
                     aria-describedby={errors.description ? 'req-desc-err' : undefined}
+                    maxLength={300}
                   />
                   {errors.description && (
                     <p id="req-desc-err" style={errStyle} role="alert">

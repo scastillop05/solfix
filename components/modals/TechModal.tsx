@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { X, Wrench, Building2, ArrowRight, CheckCircle } from 'lucide-react';
+import { X, Wrench, Building2, ArrowRight, CheckCircle, ChevronDown } from 'lucide-react';
 import { buildWhatsAppURL } from '@/lib/utils';
-import { FONT_HEADING, FONT_BODY } from '@/lib/constants';
+import { FONT_HEADING, FONT_BODY, SERVICES_DATA } from '@/lib/constants';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import type { TechFormData } from '@/lib/types';
 
@@ -18,6 +18,13 @@ const INITIAL_FORM: TechFormData = {
   companyName: '', nit: '', services: '', coverage: '',
 };
 
+const EXPERIENCE_OPTIONS = [
+  'Menos de 1 año',
+  '1 – 3 años',
+  '3 – 5 años',
+  'Más de 5 años',
+];
+
 const inputStyle = (err?: string): React.CSSProperties => ({
   width: '100%',
   background: 'rgba(255,255,255,0.05)',
@@ -28,6 +35,14 @@ const inputStyle = (err?: string): React.CSSProperties => ({
   fontFamily: FONT_BODY,
   fontSize: 14,
   outline: 'none',
+});
+
+const selectStyle = (err?: string): React.CSSProperties => ({
+  ...inputStyle(err),
+  appearance: 'none',
+  WebkitAppearance: 'none',
+  cursor: 'pointer',
+  paddingRight: 40,
 });
 
 const labelStyle: React.CSSProperties = {
@@ -48,8 +63,44 @@ const fieldErrStyle: React.CSSProperties = {
   fontFamily: FONT_BODY,
 };
 
+function SelectField({
+  id, label, value, onChange, options, placeholder, error,
+}: {
+  id: string; label: string; value: string;
+  onChange: (v: string) => void; options: string[];
+  placeholder: string; error?: string;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} style={labelStyle}>{label}</label>
+      <div style={{ position: 'relative' }}>
+        <select
+          id={id}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          style={selectStyle(error)}
+          aria-invalid={!!error}
+        >
+          <option value="" disabled style={{ background: '#0D1A42' }}>{placeholder}</option>
+          {options.map((o) => (
+            <option key={o} value={o} style={{ background: '#0D1A42' }}>{o}</option>
+          ))}
+        </select>
+        <ChevronDown
+          size={16}
+          color="rgba(255,255,255,0.4)"
+          style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
+          aria-hidden="true"
+        />
+      </div>
+      {error && <p style={fieldErrStyle} role="alert">{error}</p>}
+    </div>
+  );
+}
+
 export function TechModal({ onClose }: TechModalProps) {
   const [form, setForm] = useState<TechFormData>(INITIAL_FORM);
+  const [selectedServices, setSelectedServices] = useState<Set<string>>(new Set());
   const [sent, setSent] = useState(false);
   const [errors, setErrors] = useState<Partial<TechFormData>>({});
   const modalRef = useFocusTrap<HTMLDivElement>(onClose);
@@ -59,12 +110,22 @@ export function TechModal({ onClose }: TechModalProps) {
     setErrors((e) => ({ ...e, [key]: undefined }));
   };
 
+  const toggleService = (label: string) => {
+    setSelectedServices((prev) => {
+      const next = new Set(prev);
+      next.has(label) ? next.delete(label) : next.add(label);
+      setForm((f) => ({ ...f, services: [...next].join(', ') }));
+      setErrors((e) => ({ ...e, services: undefined }));
+      return next;
+    });
+  };
+
   const handleSubmit = () => {
     const e: Partial<TechFormData> = {};
     if (form.type === 'empresa') {
       if (!form.companyName.trim()) e.companyName = 'Requerido';
       if (!form.phone.trim())       e.phone       = 'Requerido';
-      if (!form.services.trim())    e.services    = 'Requerido';
+      if (!form.services.trim())    e.services    = 'Selecciona al menos un servicio';
       if (!form.coverage.trim())    e.coverage    = 'Requerido';
     } else {
       if (!form.name.trim())        e.name        = 'Requerido';
@@ -198,12 +259,16 @@ export function TechModal({ onClose }: TechModalProps) {
             {/* Type selector */}
             <div style={{ display: 'flex', gap: 10, marginBottom: 24 }} role="group" aria-label="Tipo de aliado">
               {([
-                { val: 'empresa' as const,       label: 'Empresa',              Icon: Building2 },
-                { val: 'independiente' as const, label: 'Técnico independiente', Icon: Wrench },
+                { val: 'empresa' as const,       label: 'Empresa',               Icon: Building2 },
+                { val: 'independiente' as const, label: 'Técnico independiente',  Icon: Wrench },
               ] as const).map(({ val, label, Icon }) => (
                 <button
                   key={val}
-                  onClick={() => { setForm({ ...INITIAL_FORM, type: val }); setErrors({}); }}
+                  onClick={() => {
+                    setForm({ ...INITIAL_FORM, type: val });
+                    setSelectedServices(new Set());
+                    setErrors({});
+                  }}
                   aria-pressed={form.type === val}
                   style={{
                     flex: 1,
@@ -280,15 +345,40 @@ export function TechModal({ onClose }: TechModalProps) {
                     />
                   </div>
                   <div>
-                    <label htmlFor="tech-services" style={labelStyle}>Servicios que ofrecen</label>
-                    <input
-                      id="tech-services"
-                      value={form.services}
-                      onChange={(e) => setField('services', e.target.value)}
-                      placeholder="Ej: Plomería, Gasfitería, Redes hidráulicas"
-                      style={inputStyle(errors.services)}
-                      aria-invalid={!!errors.services}
-                    />
+                    <p style={labelStyle} id="services-label">Servicios que ofrecen</p>
+                    <div
+                      style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}
+                      role="group"
+                      aria-labelledby="services-label"
+                    >
+                      {SERVICES_DATA.map(({ icon: Icon, label }) => {
+                        const active = selectedServices.has(label);
+                        return (
+                          <button
+                            key={label}
+                            type="button"
+                            onClick={() => toggleService(label)}
+                            aria-pressed={active}
+                            style={{
+                              background: active ? 'rgba(20,98,245,0.2)' : 'rgba(255,255,255,0.04)',
+                              border: `1.5px solid ${active ? '#1462F5' : 'rgba(255,255,255,0.08)'}`,
+                              borderRadius: 10,
+                              padding: '10px 12px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 8,
+                              cursor: 'pointer',
+                              transition: 'all 0.15s',
+                            }}
+                          >
+                            <Icon size={15} color={active ? '#1462F5' : 'rgba(255,255,255,0.4)'} aria-hidden="true" />
+                            <span style={{ color: active ? 'white' : 'rgba(255,255,255,0.5)', fontFamily: FONT_BODY, fontSize: 12, fontWeight: 500 }}>
+                              {label}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
                     {errors.services && <p style={fieldErrStyle} role="alert">{errors.services}</p>}
                   </div>
                   <div>
@@ -333,18 +423,15 @@ export function TechModal({ onClose }: TechModalProps) {
                       {errors.phone && <p style={fieldErrStyle} role="alert">{errors.phone}</p>}
                     </div>
                   </div>
-                  <div>
-                    <label htmlFor="tech-specialty" style={labelStyle}>Especialidad</label>
-                    <input
-                      id="tech-specialty"
-                      value={form.specialty}
-                      onChange={(e) => setField('specialty', e.target.value)}
-                      placeholder="Ej: Electricista, Plomero, Cerrajero..."
-                      style={inputStyle(errors.specialty)}
-                      aria-invalid={!!errors.specialty}
-                    />
-                    {errors.specialty && <p style={fieldErrStyle} role="alert">{errors.specialty}</p>}
-                  </div>
+                  <SelectField
+                    id="tech-specialty"
+                    label="Especialidad"
+                    value={form.specialty}
+                    onChange={(v) => setField('specialty', v)}
+                    options={SERVICES_DATA.map((s) => s.label)}
+                    placeholder="Selecciona tu especialidad"
+                    error={errors.specialty}
+                  />
                   <div>
                     <label htmlFor="tech-barrio" style={labelStyle}>Zona donde trabajas</label>
                     <input
@@ -357,16 +444,14 @@ export function TechModal({ onClose }: TechModalProps) {
                     />
                     {errors.barrio && <p style={fieldErrStyle} role="alert">{errors.barrio}</p>}
                   </div>
-                  <div>
-                    <label htmlFor="tech-exp" style={labelStyle}>Años de experiencia (opcional)</label>
-                    <input
-                      id="tech-exp"
-                      value={form.experience}
-                      onChange={(e) => setField('experience', e.target.value)}
-                      placeholder="Ej: 5 años"
-                      style={inputStyle()}
-                    />
-                  </div>
+                  <SelectField
+                    id="tech-exp"
+                    label="Años de experiencia (opcional)"
+                    value={form.experience}
+                    onChange={(v) => setField('experience', v)}
+                    options={EXPERIENCE_OPTIONS}
+                    placeholder="Selecciona un rango"
+                  />
                 </>
               )}
             </div>
