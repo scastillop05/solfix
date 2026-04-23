@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { track } from '@vercel/analytics';
+import { gtagEvent } from '@/lib/gtag';
 import { X, Wrench, Building2, ArrowRight, CheckCircle, ChevronDown } from 'lucide-react';
 import { buildWhatsAppURL } from '@/lib/utils';
 import { FONT_HEADING, FONT_BODY, SERVICES_DATA } from '@/lib/constants';
@@ -156,7 +156,7 @@ export function TechModal({ onClose }: TechModalProps) {
         `*Experiencia:* ${form.experience || 'No especificada'}\n\n` +
         `_Solicitud desde ${siteUrl}_`;
 
-    track('ally_registered', { type: form.type });
+    gtagEvent('ally_registered', { type: form.type });
     setSent(true);
     fetch('/api/tech', {
       method:  'POST',
