@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import {
   Phone, MessageCircle, Shield, Star, CheckCircle,
-  Clock, MapPin, Wrench,
+  Clock, MapPin, Wrench, DollarSign,
 } from 'lucide-react';
 import { CircuitBg } from '@/components/ui/CircuitBg';
 import { SFMark } from '@/components/ui/SFMark';
@@ -203,7 +203,7 @@ export function Hero() {
           >
             {[
               { icon: Shield,      text: 'Técnicos verificados' },
-              { icon: Star,        text: '4.9/5 calificación' },
+              { icon: DollarSign,  text: 'Sin costo de visita' },
               { icon: CheckCircle, text: 'Garantía de servicio' },
             ].map(({ icon: Icon, text }) => (
               <div key={text} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -408,8 +408,8 @@ export function Hero() {
                 <Shield size={16} color="white" />
               </div>
               <div>
-                <p style={{ color: 'white', fontFamily: FONT_HEADING, fontWeight: 800, fontSize: 16, lineHeight: 1 }}>98%</p>
-                <p style={{ color: 'rgba(255,255,255,0.7)', fontFamily: FONT_BODY, fontSize: 10, marginTop: 2 }}>Satisfacción</p>
+                <p style={{ color: 'white', fontFamily: FONT_HEADING, fontWeight: 800, fontSize: 16, lineHeight: 1 }}>$0</p>
+                <p style={{ color: 'rgba(255,255,255,0.7)', fontFamily: FONT_BODY, fontSize: 10, marginTop: 2 }}>Costo de visita</p>
               </div>
             </div>
           </motion.div>

@@ -184,10 +184,10 @@ export function ForTechnicians() {
               </div>
               <div>
                 <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, fontFamily: FONT_BODY }}>
-                  Ingresos estimados
+                  Potencial estimado
                 </p>
                 <p style={{ color: 'white', fontFamily: FONT_HEADING, fontWeight: 800, fontSize: 28 }}>
-                  $3.2M <span style={{ color: '#F55A14', fontSize: 18 }}>COP / mes</span>
+                  Hasta $3.4M <span style={{ color: '#F55A14', fontSize: 18 }}>COP / mes</span>
                 </p>
               </div>
             </div>
@@ -202,7 +202,7 @@ export function ForTechnicians() {
                 letterSpacing: '0.1em',
               }}
             >
-              Promedio técnico SOLFIX
+              Semana típica · estimado
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -252,8 +252,8 @@ export function ForTechnicians() {
             >
               <Award size={20} color="#1462F5" aria-hidden="true" />
               <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, fontFamily: FONT_BODY, fontWeight: 300 }}>
-                Los técnicos top ganan hasta{' '}
-                <strong style={{ color: 'white' }}>$6M COP/mes</strong>
+                Basado en 3–4 servicios/día a{' '}
+                <strong style={{ color: 'white' }}>tarifas actuales de mercado</strong>
               </span>
             </div>
           </div>

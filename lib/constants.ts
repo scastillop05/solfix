@@ -90,9 +90,9 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
 ];
 
 export const FOOTER_COLUMNS: FooterColumn[] = [
-  { title: 'Servicios', links: ['Plomería', 'Electricidad', 'Cerrajería', 'Pintura', 'Aire acondicionado'] },
-  { title: 'Empresa',   links: ['Sobre nosotros', 'Cómo funciona', 'Para técnicos', 'Blog'] },
-  { title: 'Soporte',   links: ['WhatsApp', 'Centro de ayuda', 'Términos', 'Privacidad'] },
+  { title: 'Servicios',  links: ['Plomería', 'Electricidad', 'Cerrajería', 'Pintura', 'Aire acondicionado'] },
+  { title: 'Plataforma', links: ['Cómo funciona', 'Para técnicos', 'Preguntas frecuentes'] },
+  { title: 'Contacto',   links: ['WhatsApp', 'hola@solfix.co'] },
 ];
 
 export const TICKER_ITEMS = [
@@ -101,11 +101,11 @@ export const TICKER_ITEMS = [
 ];
 
 export const EARNINGS_DATA: EarningsDay[] = [
-  { day: 'Lunes',     jobs: 4, amount: '$320.000', pct: 80 },
-  { day: 'Martes',    jobs: 3, amount: '$240.000', pct: 60 },
-  { day: 'Miércoles', jobs: 5, amount: '$400.000', pct: 100 },
-  { day: 'Jueves',    jobs: 4, amount: '$320.000', pct: 80 },
-  { day: 'Viernes',   jobs: 6, amount: '$480.000', pct: 120 },
+  { day: 'Lunes',     jobs: 2, amount: '$130.000', pct: 55 },
+  { day: 'Martes',    jobs: 3, amount: '$156.000', pct: 66 },
+  { day: 'Miércoles', jobs: 4, amount: '$208.000', pct: 88 },
+  { day: 'Jueves',    jobs: 3, amount: '$156.000', pct: 66 },
+  { day: 'Viernes',   jobs: 4, amount: '$208.000', pct: 88 },
 ];
 
 export const TECH_BENEFITS = [

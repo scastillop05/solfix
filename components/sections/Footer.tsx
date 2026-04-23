@@ -93,12 +93,16 @@ export function Footer() {
               {col.links.map((link) => (
                 <a
                   key={link}
-                  href="#"
+                  href={link.includes('@') ? `mailto:${link}` : '#'}
                   data-hover
                   onClick={(e) => {
+                    if (link.includes('@')) return;
                     e.preventDefault();
                     if (link === 'Para técnicos') openTech();
                     else if (link === 'WhatsApp' && WA_NUMBER) window.open(`https://wa.me/${WA_NUMBER}`, '_blank', 'noopener,noreferrer');
+                    else if (link === 'Cómo funciona') document.getElementById('cómo-funciona')?.scrollIntoView({ behavior: 'smooth' });
+                    else if (link === 'Preguntas frecuentes') document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
+                    else document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth' });
                   }}
                   style={{
                     display: 'block',
