@@ -8,7 +8,7 @@ import type { ServiceOption, StatItem, TestimonialItem, HowItWorksStep, FooterCo
 export const FONT_HEADING = "var(--font-outfit), 'Outfit', sans-serif";
 export const FONT_BODY = "var(--font-dm-sans), 'DM Sans', sans-serif";
 
-export const NAV_LINKS = ['Servicios', 'Cómo funciona', 'Para técnicos', 'Precios'] as const;
+export const NAV_LINKS = ['Servicios', 'Cómo funciona', 'Para técnicos', 'FAQ'] as const;
 
 export const SERVICE_OPTIONS: Pick<ServiceOption, 'icon' | 'label'>[] = [
   { icon: Zap,        label: 'Electricista' },

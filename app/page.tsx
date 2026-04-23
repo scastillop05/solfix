@@ -7,6 +7,7 @@ import { Services } from '@/components/sections/Services';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { ForTechnicians } from '@/components/sections/ForTechnicians';
+import { FAQ } from '@/components/sections/FAQ';
 import { CTA } from '@/components/sections/CTA';
 import { Footer } from '@/components/sections/Footer';
 
@@ -23,6 +24,7 @@ export default function Page() {
           <HowItWorks />
           <Testimonials />
           <ForTechnicians />
+          <FAQ />
           <CTA />
         </main>
         <Footer />
