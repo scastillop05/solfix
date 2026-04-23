@@ -109,7 +109,7 @@ export function Navbar() {
               cursor: 'pointer',
             }}
           >
-            Soy técnico
+            Soy aliado
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.05, background: '#D94A0A' }}
@@ -206,7 +206,7 @@ export function Navbar() {
                     cursor: 'pointer',
                   }}
                 >
-                  Soy técnico
+                  Soy aliado
                 </button>
                 <button
                   onClick={() => { openRequest(); close(); }}

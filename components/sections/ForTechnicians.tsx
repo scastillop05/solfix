@@ -62,7 +62,7 @@ export function ForTechnicians() {
               marginBottom: 12,
             }}
           >
-            Para técnicos
+            Para aliados
           </span>
           <h2
             style={{
@@ -75,9 +75,9 @@ export function ForTechnicians() {
               marginBottom: 20,
             }}
           >
-            ¿Eres técnico?<br />
-            <span style={{ color: '#F55A14' }}>Gana más,</span><br />
-            trabaja mejor.
+            ¿Empresa o técnico?<br />
+            <span style={{ color: '#F55A14' }}>Crece con</span><br />
+            SOLFIX.
           </h2>
           <p
             style={{
@@ -89,7 +89,7 @@ export function ForTechnicians() {
               marginBottom: 32,
             }}
           >
-            Únete a la red de profesionales verificados de SOLFIX. Recibe trabajos cerca a ti, sin intermediarios.
+            Empresas de servicios o técnicos independientes — conéctate con clientes verificados, aumenta tu cartera y opera con el respaldo de SOLFIX.
           </p>
 
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
@@ -130,7 +130,7 @@ export function ForTechnicians() {
             whileTap={{ scale: 0.97 }}
             data-hover
             onClick={openTech}
-            aria-label="Registrarme como técnico en SOLFIX"
+            aria-label="Unirse como aliado a SOLFIX"
             style={{
               marginTop: 28,
               background: '#F55A14',
@@ -147,7 +147,7 @@ export function ForTechnicians() {
               gap: 8,
             }}
           >
-            Registrarme como técnico <ArrowRight size={16} aria-hidden="true" />
+            Unirse como aliado <ArrowRight size={16} aria-hidden="true" />
           </motion.button>
         </motion.div>
 

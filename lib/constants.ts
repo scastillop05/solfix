@@ -97,10 +97,10 @@ export const EARNINGS_DATA: EarningsDay[] = [
 ];
 
 export const TECH_BENEFITS = [
-  'Recibe solicitudes cerca a tu ubicación en tiempo real',
-  'Tú decides cuándo y dónde trabajar',
-  'Pagos rápidos por Nequi, Daviplata o efectivo',
-  'Perfil verificado que genera confianza y más clientes',
+  'Accede a clientes verificados sin inversión en publicidad',
+  'Tú o tu empresa decide cuándo y dónde operar',
+  'Pagos rápidos y transparentes, sin sorpresas',
+  'Perfil o empresa verificada que genera confianza y más trabajo',
 ];
 
 export const CIRCUIT_PATHS = [

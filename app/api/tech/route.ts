@@ -32,12 +32,18 @@ function checkRateLimit(ip: string): boolean {
 function validatePayload(body: unknown): body is TechFormData {
   if (!body || typeof body !== 'object') return false;
   const b = body as Record<string, unknown>;
+  if (typeof b.phone !== 'string' || b.phone.replace(/\D/g, '').length < 7) return false;
+  if (b.type === 'empresa') {
+    return (
+      typeof b.companyName === 'string' && b.companyName.trim().length > 0 &&
+      typeof b.services    === 'string' && b.services.trim().length > 0 &&
+      typeof b.coverage    === 'string' && b.coverage.trim().length > 0
+    );
+  }
   return (
     typeof b.name      === 'string' && b.name.trim().length >= 2 &&
-    typeof b.phone     === 'string' && b.phone.replace(/\D/g, '').length >= 7 &&
     typeof b.specialty === 'string' && b.specialty.trim().length > 0 &&
-    typeof b.barrio    === 'string' && b.barrio.trim().length > 0 &&
-    typeof b.experience === 'string'
+    typeof b.barrio    === 'string' && b.barrio.trim().length > 0
   );
 }
 

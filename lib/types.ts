@@ -53,11 +53,16 @@ export interface RequestFormData {
 }
 
 export interface TechFormData {
+  type: 'independiente' | 'empresa';
   name: string;
   phone: string;
   specialty: string;
   barrio: string;
   experience: string;
+  companyName: string;
+  nit: string;
+  services: string;
+  coverage: string;
 }
 
 export interface ModalContextValue {

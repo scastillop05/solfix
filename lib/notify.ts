@@ -59,32 +59,65 @@ export async function notifyServiceRequest(data: {
 }
 
 export async function notifyTechRegistration(data: {
-  name: string;
+  type?: string;
+  name?: string;
   phone: string;
-  specialty: string;
-  barrio: string;
-  experience: string;
+  specialty?: string;
+  barrio?: string;
+  experience?: string;
+  companyName?: string;
+  nit?: string;
+  services?: string;
+  coverage?: string;
 }): Promise<void> {
-  const telegram =
-    `👷 *Nuevo técnico quiere unirse a SOLFIX*\n\n` +
-    `*Nombre:* ${data.name}\n` +
-    `*Teléfono:* ${data.phone}\n` +
-    `*Especialidad:* ${data.specialty}\n` +
-    `*Zona:* ${data.barrio}\n` +
-    `*Experiencia:* ${data.experience || 'No especificada'}`;
+  const isEmpresa = data.type === 'empresa';
+
+  const telegram = isEmpresa
+    ? `[EMPRESA] *Nueva empresa quiere ser aliada de SOLFIX*\n\n` +
+      `*Empresa:* ${data.companyName}\n` +
+      `*NIT/RUT:* ${data.nit || 'No indicado'}\n` +
+      `*WhatsApp:* ${data.phone}\n` +
+      `*Contacto:* ${data.name || 'No indicado'}\n` +
+      `*Servicios:* ${data.services}\n` +
+      `*Cobertura:* ${data.coverage}`
+    : `[TECNICO] *Nuevo técnico quiere unirse a SOLFIX*\n\n` +
+      `*Nombre:* ${data.name}\n` +
+      `*Teléfono:* ${data.phone}\n` +
+      `*Especialidad:* ${data.specialty}\n` +
+      `*Zona:* ${data.barrio}\n` +
+      `*Experiencia:* ${data.experience || 'No especificada'}`;
+
+  const rows = isEmpresa
+    ? [
+        ['Empresa',   data.companyName ?? ''],
+        ['NIT/RUT',   data.nit || 'No indicado'],
+        ['WhatsApp',  data.phone],
+        ['Contacto',  data.name || 'No indicado'],
+        ['Servicios', data.services ?? ''],
+        ['Cobertura', data.coverage ?? ''],
+      ]
+    : [
+        ['Nombre',       data.name ?? ''],
+        ['Teléfono',     data.phone],
+        ['Especialidad', data.specialty ?? ''],
+        ['Zona',         data.barrio ?? ''],
+        ['Experiencia',  data.experience || 'No especificada'],
+      ];
 
   const emailHtml =
-    `<h2>👷 Nuevo técnico — SOLFIX</h2>` +
+    `<h2>${isEmpresa ? 'Nueva empresa aliada' : 'Nuevo técnico'} — SOLFIX</h2>` +
     `<table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:15px">` +
-    `<tr><td style="padding:8px;font-weight:bold">Nombre</td><td style="padding:8px">${data.name}</td></tr>` +
-    `<tr style="background:#f5f5f5"><td style="padding:8px;font-weight:bold">Teléfono</td><td style="padding:8px">${data.phone}</td></tr>` +
-    `<tr><td style="padding:8px;font-weight:bold">Especialidad</td><td style="padding:8px">${data.specialty}</td></tr>` +
-    `<tr style="background:#f5f5f5"><td style="padding:8px;font-weight:bold">Zona</td><td style="padding:8px">${data.barrio}</td></tr>` +
-    `<tr><td style="padding:8px;font-weight:bold">Experiencia</td><td style="padding:8px">${data.experience || 'No especificada'}</td></tr>` +
+    rows.map(([k, v], i) =>
+      `<tr${i % 2 ? ' style="background:#f5f5f5"' : ''}><td style="padding:8px;font-weight:bold">${k}</td><td style="padding:8px">${v}</td></tr>`
+    ).join('') +
     `</table>`;
+
+  const subject = isEmpresa
+    ? `[SOLFIX] Nueva empresa aliada — ${data.companyName}`
+    : `[SOLFIX] Nuevo técnico — ${data.name} (${data.specialty})`;
 
   await Promise.allSettled([
     sendTelegram(telegram),
-    sendEmail(`[SOLFIX] Nuevo técnico — ${data.name} (${data.specialty})`, emailHtml),
+    sendEmail(subject, emailHtml),
   ]);
 }

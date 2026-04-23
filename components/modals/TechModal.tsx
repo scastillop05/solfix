@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { X, Wrench, ArrowRight, CheckCircle } from 'lucide-react';
+import { X, Wrench, Building2, ArrowRight, CheckCircle } from 'lucide-react';
 import { buildWhatsAppURL } from '@/lib/utils';
 import { FONT_HEADING, FONT_BODY } from '@/lib/constants';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
@@ -12,7 +12,11 @@ interface TechModalProps {
   onClose: () => void;
 }
 
-const INITIAL_FORM: TechFormData = { name: '', phone: '', specialty: '', barrio: '', experience: '' };
+const INITIAL_FORM: TechFormData = {
+  type: 'independiente',
+  name: '', phone: '', specialty: '', barrio: '', experience: '',
+  companyName: '', nit: '', services: '', coverage: '',
+};
 
 const inputStyle = (err?: string): React.CSSProperties => ({
   width: '100%',
@@ -57,21 +61,38 @@ export function TechModal({ onClose }: TechModalProps) {
 
   const handleSubmit = () => {
     const e: Partial<TechFormData> = {};
-    if (!form.name.trim())      e.name      = 'Requerido';
-    if (!form.phone.trim())     e.phone     = 'Requerido';
-    if (!form.specialty.trim()) e.specialty = 'Requerido';
-    if (!form.barrio.trim())    e.barrio    = 'Requerido';
+    if (form.type === 'empresa') {
+      if (!form.companyName.trim()) e.companyName = 'Requerido';
+      if (!form.phone.trim())       e.phone       = 'Requerido';
+      if (!form.services.trim())    e.services    = 'Requerido';
+      if (!form.coverage.trim())    e.coverage    = 'Requerido';
+    } else {
+      if (!form.name.trim())        e.name        = 'Requerido';
+      if (!form.phone.trim())       e.phone       = 'Requerido';
+      if (!form.specialty.trim())   e.specialty   = 'Requerido';
+      if (!form.barrio.trim())      e.barrio      = 'Requerido';
+    }
     setErrors(e);
     if (Object.keys(e).length > 0) return;
 
-    const msg =
-      `[TECNICO] *Quiero unirme a SOLFIX como técnico*\n\n` +
-      `*Nombre:* ${form.name}\n` +
-      `*Teléfono:* ${form.phone}\n` +
-      `*Especialidad:* ${form.specialty}\n` +
-      `*Zona:* ${form.barrio}\n` +
-      `*Experiencia:* ${form.experience || 'No especificada'}\n\n` +
-      `_Solicitud desde ${process.env.NEXT_PUBLIC_SITE_URL ?? 'solfix.lat'}_`;
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'solfix.lat';
+
+    const msg = form.type === 'empresa'
+      ? `[EMPRESA] *Quiero ser aliado de SOLFIX*\n\n` +
+        `*Empresa:* ${form.companyName}\n` +
+        `*NIT/RUT:* ${form.nit || 'No indicado'}\n` +
+        `*WhatsApp:* ${form.phone}\n` +
+        `*Contacto:* ${form.name || 'No indicado'}\n` +
+        `*Servicios:* ${form.services}\n` +
+        `*Cobertura:* ${form.coverage}\n\n` +
+        `_Solicitud desde ${siteUrl}_`
+      : `[TECNICO] *Quiero unirme a SOLFIX como técnico*\n\n` +
+        `*Nombre:* ${form.name}\n` +
+        `*WhatsApp:* ${form.phone}\n` +
+        `*Especialidad:* ${form.specialty}\n` +
+        `*Zona:* ${form.barrio}\n` +
+        `*Experiencia:* ${form.experience || 'No especificada'}\n\n` +
+        `_Solicitud desde ${siteUrl}_`;
 
     setSent(true);
     fetch('/api/tech', {
@@ -86,9 +107,7 @@ export function TechModal({ onClose }: TechModalProps) {
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = '';
-    };
+    return () => { document.body.style.overflow = ''; };
   }, []);
 
   return (
@@ -110,7 +129,7 @@ export function TechModal({ onClose }: TechModalProps) {
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       role="dialog"
       aria-modal="true"
-      aria-label="Registro de técnico"
+      aria-label="Registro de aliado"
     >
       <motion.div
         ref={modalRef}
@@ -127,6 +146,8 @@ export function TechModal({ onClose }: TechModalProps) {
           padding: '32px',
           position: 'relative',
           boxShadow: '0 40px 120px rgba(0,0,0,0.6)',
+          maxHeight: '90vh',
+          overflowY: 'auto',
         }}
       >
         <button
@@ -168,81 +189,193 @@ export function TechModal({ onClose }: TechModalProps) {
               <Wrench size={22} color="#F55A14" aria-hidden="true" />
             </div>
             <h2 style={{ color: 'white', fontFamily: FONT_HEADING, fontWeight: 800, fontSize: 24, marginBottom: 6 }}>
-              Únete como técnico
+              Únete a SOLFIX
             </h2>
-            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 14, fontFamily: FONT_BODY, marginBottom: 24 }}>
-              Gana más clientes, trabaja en tu barrio y cobra de forma segura.
+            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 14, fontFamily: FONT_BODY, marginBottom: 20 }}>
+              Conecta con más clientes, opera con respaldo y crece tu negocio.
             </p>
 
+            {/* Type selector */}
+            <div style={{ display: 'flex', gap: 10, marginBottom: 24 }} role="group" aria-label="Tipo de aliado">
+              {([
+                { val: 'empresa' as const,       label: 'Empresa',              Icon: Building2 },
+                { val: 'independiente' as const, label: 'Técnico independiente', Icon: Wrench },
+              ] as const).map(({ val, label, Icon }) => (
+                <button
+                  key={val}
+                  onClick={() => { setForm({ ...INITIAL_FORM, type: val }); setErrors({}); }}
+                  aria-pressed={form.type === val}
+                  style={{
+                    flex: 1,
+                    padding: '12px 10px',
+                    borderRadius: 12,
+                    cursor: 'pointer',
+                    background: form.type === val ? 'rgba(20,98,245,0.15)' : 'rgba(255,255,255,0.04)',
+                    border: `1.5px solid ${form.type === val ? '#1462F5' : 'rgba(255,255,255,0.08)'}`,
+                    color: form.type === val ? 'white' : 'rgba(255,255,255,0.4)',
+                    fontFamily: FONT_BODY,
+                    fontSize: 13,
+                    fontWeight: 500,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 8,
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  <Icon size={15} aria-hidden="true" />
+                  {label}
+                </button>
+              ))}
+            </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 12 }}>
-                <div>
-                  <label htmlFor="tech-name" style={labelStyle}>Nombre completo</label>
-                  <input
-                    id="tech-name"
-                    value={form.name}
-                    onChange={(e) => setField('name', e.target.value)}
-                    placeholder="Tu nombre"
-                    style={inputStyle(errors.name)}
-                    aria-invalid={!!errors.name}
-                  />
-                  {errors.name && <p style={fieldErrStyle} role="alert">{errors.name}</p>}
-                </div>
-                <div>
-                  <label htmlFor="tech-phone" style={labelStyle}>WhatsApp</label>
-                  <input
-                    id="tech-phone"
-                    value={form.phone}
-                    onChange={(e) => setField('phone', e.target.value)}
-                    placeholder="300 000 0000"
-                    type="tel"
-                    style={inputStyle(errors.phone)}
-                    aria-invalid={!!errors.phone}
-                  />
-                  {errors.phone && <p style={fieldErrStyle} role="alert">{errors.phone}</p>}
-                </div>
-              </div>
-              <div>
-                <label htmlFor="tech-specialty" style={labelStyle}>Especialidad</label>
-                <input
-                  id="tech-specialty"
-                  value={form.specialty}
-                  onChange={(e) => setField('specialty', e.target.value)}
-                  placeholder="Ej: Electricista, Plomero, Cerrajero..."
-                  style={inputStyle(errors.specialty)}
-                  aria-invalid={!!errors.specialty}
-                />
-                {errors.specialty && <p style={fieldErrStyle} role="alert">{errors.specialty}</p>}
-              </div>
-              <div>
-                <label htmlFor="tech-barrio" style={labelStyle}>Zona donde trabajas</label>
-                <input
-                  id="tech-barrio"
-                  value={form.barrio}
-                  onChange={(e) => setField('barrio', e.target.value)}
-                  placeholder="Ej: Norte, Sur, Centro de tu ciudad..."
-                  style={inputStyle(errors.barrio)}
-                  aria-invalid={!!errors.barrio}
-                />
-                {errors.barrio && <p style={fieldErrStyle} role="alert">{errors.barrio}</p>}
-              </div>
-              <div>
-                <label htmlFor="tech-exp" style={labelStyle}>Años de experiencia (opcional)</label>
-                <input
-                  id="tech-exp"
-                  value={form.experience}
-                  onChange={(e) => setField('experience', e.target.value)}
-                  placeholder="Ej: 5 años"
-                  style={inputStyle()}
-                />
-              </div>
+              {form.type === 'empresa' ? (
+                <>
+                  <div>
+                    <label htmlFor="tech-company" style={labelStyle}>Nombre de la empresa</label>
+                    <input
+                      id="tech-company"
+                      value={form.companyName}
+                      onChange={(e) => setField('companyName', e.target.value)}
+                      placeholder="Ej: Plomería Martínez S.A.S"
+                      style={inputStyle(errors.companyName)}
+                      aria-invalid={!!errors.companyName}
+                    />
+                    {errors.companyName && <p style={fieldErrStyle} role="alert">{errors.companyName}</p>}
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 12 }}>
+                    <div>
+                      <label htmlFor="tech-nit" style={labelStyle}>NIT / RUT (opcional)</label>
+                      <input
+                        id="tech-nit"
+                        value={form.nit}
+                        onChange={(e) => setField('nit', e.target.value)}
+                        placeholder="900.123.456-7"
+                        style={inputStyle()}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="tech-phone-emp" style={labelStyle}>WhatsApp de contacto</label>
+                      <input
+                        id="tech-phone-emp"
+                        value={form.phone}
+                        onChange={(e) => setField('phone', e.target.value)}
+                        placeholder="300 000 0000"
+                        type="tel"
+                        style={inputStyle(errors.phone)}
+                        aria-invalid={!!errors.phone}
+                      />
+                      {errors.phone && <p style={fieldErrStyle} role="alert">{errors.phone}</p>}
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="tech-contact" style={labelStyle}>Nombre del contacto (opcional)</label>
+                    <input
+                      id="tech-contact"
+                      value={form.name}
+                      onChange={(e) => setField('name', e.target.value)}
+                      placeholder="Persona de contacto"
+                      style={inputStyle()}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="tech-services" style={labelStyle}>Servicios que ofrecen</label>
+                    <input
+                      id="tech-services"
+                      value={form.services}
+                      onChange={(e) => setField('services', e.target.value)}
+                      placeholder="Ej: Plomería, Gasfitería, Redes hidráulicas"
+                      style={inputStyle(errors.services)}
+                      aria-invalid={!!errors.services}
+                    />
+                    {errors.services && <p style={fieldErrStyle} role="alert">{errors.services}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="tech-coverage" style={labelStyle}>Zona de cobertura</label>
+                    <input
+                      id="tech-coverage"
+                      value={form.coverage}
+                      onChange={(e) => setField('coverage', e.target.value)}
+                      placeholder="Ej: Norte y Centro de la ciudad"
+                      style={inputStyle(errors.coverage)}
+                      aria-invalid={!!errors.coverage}
+                    />
+                    {errors.coverage && <p style={fieldErrStyle} role="alert">{errors.coverage}</p>}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 12 }}>
+                    <div>
+                      <label htmlFor="tech-name" style={labelStyle}>Nombre completo</label>
+                      <input
+                        id="tech-name"
+                        value={form.name}
+                        onChange={(e) => setField('name', e.target.value)}
+                        placeholder="Tu nombre"
+                        style={inputStyle(errors.name)}
+                        aria-invalid={!!errors.name}
+                      />
+                      {errors.name && <p style={fieldErrStyle} role="alert">{errors.name}</p>}
+                    </div>
+                    <div>
+                      <label htmlFor="tech-phone" style={labelStyle}>WhatsApp</label>
+                      <input
+                        id="tech-phone"
+                        value={form.phone}
+                        onChange={(e) => setField('phone', e.target.value)}
+                        placeholder="300 000 0000"
+                        type="tel"
+                        style={inputStyle(errors.phone)}
+                        aria-invalid={!!errors.phone}
+                      />
+                      {errors.phone && <p style={fieldErrStyle} role="alert">{errors.phone}</p>}
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="tech-specialty" style={labelStyle}>Especialidad</label>
+                    <input
+                      id="tech-specialty"
+                      value={form.specialty}
+                      onChange={(e) => setField('specialty', e.target.value)}
+                      placeholder="Ej: Electricista, Plomero, Cerrajero..."
+                      style={inputStyle(errors.specialty)}
+                      aria-invalid={!!errors.specialty}
+                    />
+                    {errors.specialty && <p style={fieldErrStyle} role="alert">{errors.specialty}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="tech-barrio" style={labelStyle}>Zona donde trabajas</label>
+                    <input
+                      id="tech-barrio"
+                      value={form.barrio}
+                      onChange={(e) => setField('barrio', e.target.value)}
+                      placeholder="Ej: Norte, Sur, Centro de tu ciudad..."
+                      style={inputStyle(errors.barrio)}
+                      aria-invalid={!!errors.barrio}
+                    />
+                    {errors.barrio && <p style={fieldErrStyle} role="alert">{errors.barrio}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="tech-exp" style={labelStyle}>Años de experiencia (opcional)</label>
+                    <input
+                      id="tech-exp"
+                      value={form.experience}
+                      onChange={(e) => setField('experience', e.target.value)}
+                      placeholder="Ej: 5 años"
+                      style={inputStyle()}
+                    />
+                  </div>
+                </>
+              )}
             </div>
 
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={handleSubmit}
-              aria-label="Enviar solicitud de registro como técnico"
+              aria-label="Enviar solicitud para unirse a SOLFIX"
               style={{
                 width: '100%',
                 marginTop: 24,
