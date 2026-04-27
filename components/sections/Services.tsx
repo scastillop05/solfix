@@ -57,11 +57,10 @@ export function Services() {
           {SERVICES_DATA.map(({ icon: Icon, label, time, price }, i) => (
             <motion.div
               key={label}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              whileHover={{ y: -6 }}
+              transition={{ duration: 0.5, delay: i * 0.07 }}
               onClick={openRequest}
               data-hover
               role="button"
@@ -76,32 +75,11 @@ export function Services() {
                 cursor: 'pointer',
                 position: 'relative',
                 overflow: 'hidden',
-                transition: 'border-color 0.3s',
+                transition: 'border-color 0.2s',
               }}
+              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.borderColor = 'rgba(20,98,245,0.35)')}
+              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.06)')}
             >
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(135deg, rgba(20,98,245,0.08), transparent)',
-                  pointerEvents: 'none',
-                }}
-              />
-              <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: '100%' }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.15 }}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  height: 2,
-                  background: 'linear-gradient(90deg, #1462F5, transparent)',
-                }}
-              />
 
               <div style={{ position: 'relative', zIndex: 1 }}>
                 <div

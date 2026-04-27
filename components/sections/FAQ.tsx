@@ -34,6 +34,14 @@ const FAQS = [
     q: '¿Puedo solicitar un servicio de noche o en fin de semana?',
     a: 'Sí, estamos disponibles 24/7. Algunos servicios como cerrajería y emergencias eléctricas tienen atención inmediata a cualquier hora. Para otros servicios como pintura o carpintería, coordinamos el horario que mejor te quede.',
   },
+  {
+    q: '¿Cómo garantizan la calidad del trabajo?',
+    a: 'Todos nuestros técnicos pasan por un proceso de verificación de antecedentes y evaluación técnica. Además, cada servicio incluye garantía — si el trabajo no queda bien, lo corregimos sin costo adicional.',
+  },
+  {
+    q: '¿El precio que veo es el precio final?',
+    a: 'Sí. En SOLFIX el precio se acuerda antes de comenzar el trabajo. Sin cobros sorpresa ni adicionales no autorizados.',
+  },
 ];
 
 export function FAQ() {

@@ -15,6 +15,7 @@ export interface StatItem {
   suffix: string;
   prefix: string;
   label: string;
+  decimals?: number;
 }
 
 export interface TestimonialItem {

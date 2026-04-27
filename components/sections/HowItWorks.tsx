@@ -14,16 +14,6 @@ export function HowItWorks() {
         overflow: 'hidden',
       }}
     >
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          opacity: 0.025,
-          backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-        }}
-      />
 
       <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <motion.div
@@ -88,53 +78,34 @@ export function HowItWorks() {
               transition={{ duration: 0.6, delay: i * 0.15 }}
               style={{ textAlign: 'center', position: 'relative' }}
             >
-              <div style={{ position: 'relative', display: 'inline-block', marginBottom: 24 }}>
-                <motion.div
+              <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', marginBottom: 24 }}>
+                <div
                   style={{
-                    width: 100,
-                    height: 100,
-                    borderRadius: '50%',
-                    border: '2px solid rgba(20,98,245,0.3)',
+                    width: 64,
+                    height: 64,
+                    borderRadius: 16,
+                    border: '1px solid rgba(20,98,245,0.25)',
+                    background: 'rgba(20,98,245,0.07)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    background: 'rgba(20,98,245,0.05)',
-                    position: 'relative',
+                    marginBottom: 12,
                   }}
-                  whileInView={{ borderColor: 'rgba(20,98,245,0.7)' }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.2 }}
                 >
-                  <motion.div
-                    aria-hidden="true"
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      borderRadius: '50%',
-                      border: '1px solid rgba(245,90,20,0.3)',
-                    }}
-                    animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
-                    transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.7 }}
-                  />
-                  <Icon size={30} color="#1462F5" aria-hidden="true" />
-                </motion.div>
-                <div
+                  <Icon size={26} color="#1462F5" aria-hidden="true" />
+                </div>
+                <span
                   aria-hidden="true"
                   style={{
-                    position: 'absolute',
-                    top: -8,
-                    right: -8,
-                    width: 28,
-                    height: 28,
-                    background: '#F55A14',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    color: '#F55A14',
+                    fontFamily: FONT_HEADING,
+                    fontWeight: 800,
+                    fontSize: 11,
+                    letterSpacing: '0.12em',
                   }}
                 >
-                  <span style={{ color: 'white', fontFamily: FONT_HEADING, fontWeight: 800, fontSize: 10 }}>{n}</span>
-                </div>
+                  {n}
+                </span>
               </div>
               <h3 style={{ color: 'white', fontFamily: FONT_HEADING, fontWeight: 700, fontSize: 20, marginBottom: 12 }}>
                 {title}

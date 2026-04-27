@@ -18,19 +18,6 @@ export function ForTechnicians() {
         overflow: 'hidden',
       }}
     >
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          width: 600,
-          height: 600,
-          background: 'rgba(245,90,20,0.06)',
-          borderRadius: '50%',
-          filter: 'blur(100px)',
-        }}
-      />
 
       <div
         style={{

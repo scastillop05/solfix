@@ -19,7 +19,7 @@ export function StatsBar() {
         style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gap: 32 }}
         className="grid-cols-2 md:grid-cols-4"
       >
-        {STATS.map(({ icon: Icon, value, suffix, prefix, label }, i) => (
+        {STATS.map(({ icon: Icon, value, suffix, prefix, label, decimals }, i) => (
           <motion.div
             key={label}
             initial={{ opacity: 0, y: 30 }}
@@ -58,7 +58,7 @@ export function StatsBar() {
                 lineHeight: 1,
               }}
             >
-              <Counter to={value} suffix={suffix} prefix={prefix} />
+              <Counter to={value} suffix={suffix} prefix={prefix} decimals={decimals} />
             </div>
             <div
               style={{

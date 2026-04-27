@@ -7,9 +7,10 @@ interface CounterProps {
   to: number;
   suffix?: string;
   prefix?: string;
+  decimals?: number;
 }
 
-export function Counter({ to, suffix = '', prefix = '' }: CounterProps) {
+export function Counter({ to, suffix = '', prefix = '', decimals }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
   const count = useMotionValue(0);
@@ -21,16 +22,17 @@ export function Counter({ to, suffix = '', prefix = '' }: CounterProps) {
       ease: 'easeOut',
       onUpdate: (v) => {
         if (ref.current) {
-          ref.current.textContent = prefix + Math.round(v).toLocaleString() + suffix;
+          const formatted = decimals != null ? v.toFixed(decimals) : Math.round(v).toLocaleString();
+          ref.current.textContent = prefix + formatted + suffix;
         }
       },
     });
     return ctrl.stop;
-  }, [inView, to, suffix, prefix, count]);
+  }, [inView, to, suffix, prefix, decimals, count]);
 
   return (
     <span ref={ref}>
-      {prefix}0{suffix}
+      {prefix}{decimals != null ? (0).toFixed(decimals) : '0'}{suffix}
     </span>
   );
 }

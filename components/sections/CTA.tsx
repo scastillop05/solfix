@@ -21,18 +21,12 @@ export function CTA() {
         aria-hidden="true"
         style={{
           position: 'absolute',
-          inset: 0,
-          background: 'radial-gradient(ellipse at center, rgba(20,98,245,0.15) 0%, transparent 70%)',
-        }}
-      />
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          opacity: 0.04,
-          backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '50%',
+          background: 'linear-gradient(180deg, rgba(20,98,245,0.04) 0%, transparent 100%)',
+          pointerEvents: 'none',
         }}
       />
 
@@ -137,6 +131,67 @@ export function CTA() {
         >
           Disponible 24/7 &nbsp;·&nbsp; Sin costo de visita &nbsp;·&nbsp; Pagas solo si quedas satisfecho
         </p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          style={{
+            marginTop: 64,
+            background: 'rgba(20,98,245,0.08)',
+            border: '1px solid rgba(20,98,245,0.25)',
+            borderRadius: 20,
+            padding: '36px 40px',
+            textAlign: 'center',
+          }}
+        >
+          <h3
+            style={{
+              color: 'white',
+              fontFamily: FONT_HEADING,
+              fontWeight: 700,
+              fontSize: 'clamp(20px,3vw,28px)',
+              marginBottom: 12,
+            }}
+          >
+            ¿Administras un conjunto residencial?
+          </h3>
+          <p
+            style={{
+              color: 'rgba(255,255,255,0.45)',
+              fontFamily: FONT_BODY,
+              fontSize: 16,
+              lineHeight: 1.7,
+              maxWidth: 480,
+              margin: '0 auto 28px',
+            }}
+          >
+            Conviértete en aliado SOLFIX. Ofrece servicios verificados a tus residentes
+            y recibe una comisión por cada trabajo completado.
+          </p>
+          <motion.button
+            whileHover={{ scale: 1.04, background: 'rgba(20,98,245,0.25)' }}
+            whileTap={{ scale: 0.97 }}
+            data-hover
+            onClick={openTech}
+            aria-label="Quiero ser aliado"
+            style={{
+              background: 'rgba(20,98,245,0.15)',
+              border: '1.5px solid rgba(20,98,245,0.4)',
+              color: '#7BA8FF',
+              fontFamily: FONT_BODY,
+              fontWeight: 600,
+              fontSize: 15,
+              padding: '13px 28px',
+              borderRadius: 12,
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+            }}
+          >
+            Quiero ser aliado →
+          </motion.button>
+        </motion.div>
       </motion.div>
     </section>
   );
